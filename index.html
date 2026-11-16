@@ -4316,7 +4316,7 @@ input[type=number]{ -moz-appearance:textfield !important; appearance:textfield !
 .set-country{ display:flex; align-items:center; gap:6px; padding:7px 9px; border-radius:9px; border:1px solid var(--av-line,#e6e9ee); background:var(--av-sub,#f2f4f7); color:var(--av-ink,#0d0f12); font-size:10px; }
 .set-country.on{ border-color:#00b45a; background:rgba(0,180,90,.09); }
 </style>
-<script>try{if(localStorage.getItem('mide.glass')==='on')document.documentElement.classList.add('glass-on');}catch(e){}</script>
+<script>try{if(localStorage.getItem('mide.testv2.glass')==='on')document.documentElement.classList.add('glass-on');}catch(e){}</script>
 <script>window.__mideErr='';window.addEventListener('error',function(e){try{window.__mideErr=(e.message||'')+(e.lineno?' @'+e.lineno:'');}catch(x){}});</script>
 </head>
 <body>
@@ -6493,7 +6493,7 @@ window.MODEL_PHOTO['pixel11pro_pink'] = 'data:image/jpeg;base64,/9j/4QDSRXhpZgAA
   };
 
   // ручной переключатель «полный режим»: ключ есть, но можно играть офлайн
-  const AI_MODE_KEY = 'mide.aimode';
+  const AI_MODE_KEY = 'mide.testv2.aimode';
   let aiOff = false;
   try { aiOff = localStorage.getItem(AI_MODE_KEY) === 'off'; } catch (e) { }
 
@@ -7590,7 +7590,7 @@ window.MODEL_PHOTO['pixel11pro_pink'] = 'data:image/jpeg;base64,/9j/4QDSRXhpZgAA
 (function (root) {
   'use strict';
 
-  const THEME_KEY = 'mide.theme';
+  const THEME_KEY = 'mide.testv2.theme';
 
   /* ---------------- ТЕМА ---------------- */
   const THEMES = {
@@ -9176,6 +9176,7 @@ window.MODEL_PHOTO['pixel11pro_pink'] = 'data:image/jpeg;base64,/9j/4QDSRXhpZgAA
   }
 
   async function sync(state) {
+    if (BETA_TEST) return null;
     var u = tgUser();
     if (!u || !state || !state.stats) return null;
     ensureUid(state);
@@ -9789,10 +9790,11 @@ window.MODEL_PHOTO['pixel11pro_pink'] = 'data:image/jpeg;base64,/9j/4QDSRXhpZgAA
   const D = root.DATA;
   const E = root.Engine;
 
-  const SAVE_KEY = 'mide.save.v1';
-  const OLD_SAVE_KEY = 'avitoFlip.save.v2';
-  const KEY_KEY = 'mide.key';
-  const OLD_KEY_KEY = 'avitoFlip.key';
+  const BETA_TEST = true;
+  const SAVE_KEY = 'mide.testv2.save.v1';
+  const OLD_SAVE_KEY = 'mide.testv2.old.save';
+  const KEY_KEY = 'mide.testv2.key';
+  const OLD_KEY_KEY = 'mide.testv2.old.key';
 
   const COLOR_HUE = { 'чёрный': 210, 'белый': 45, 'серый': 210, 'титановый': 35, 'синий': 215, 'зелёный': 145, 'красный': 0, 'розовый': 330, 'фиолетовый': 270 };
   const COLOR_SAT = { 'чёрный': 12, 'белый': 8, 'серый': 8, 'титановый': 18, 'синий': 60, 'зелёный': 45, 'красный': 62, 'розовый': 55, 'фиолетовый': 55 };
@@ -9859,10 +9861,10 @@ const App = {
         if (k) root.AI.setKey(k);
       } catch (e) { }
       try {
-        if (localStorage.getItem('mide.reset') !== 'r2') {
+        if (localStorage.getItem('mide.testv2.reset') !== 'r2') {
           localStorage.removeItem(SAVE_KEY);
           localStorage.removeItem(OLD_SAVE_KEY);
-          localStorage.setItem('mide.reset', 'r2');
+          localStorage.setItem('mide.testv2.reset', 'r2');
           this.state = null;
         }
       } catch (e) { }
@@ -12870,7 +12872,7 @@ const App = {
 
   // жидкое стекло: по умолчанию включено, если не выключено в настройках
   try {
-    if (localStorage.getItem('mide.glass') === 'on') document.documentElement.classList.add('glass-on');
+    if (localStorage.getItem('mide.testv2.glass') === 'on') document.documentElement.classList.add('glass-on');
     else document.documentElement.classList.remove('glass-on');
   } catch (e) {}
 
@@ -13293,7 +13295,7 @@ const App = {
         return;
       }
       root.AI.setKey(k);
-      try { localStorage.setItem('mide.key', k); } catch (e) {}
+      try { localStorage.setItem('mide.testv2.key', k); } catch (e) {}
       App.state.hideAiBanner = false;
       App.toast(k ? 'Ключ сохранён' : 'Ключ убран', k ? 'good' : '');
       App.renderSettings();
@@ -13327,7 +13329,7 @@ const App = {
     if (swGlass) swGlass.onclick = () => {
       const on = !document.documentElement.classList.contains('glass-on');
       document.documentElement.classList.toggle('glass-on', on);
-      try { localStorage.setItem('mide.glass', on ? 'on' : 'off'); } catch (e) {}
+      try { localStorage.setItem('mide.testv2.glass', on ? 'on' : 'off'); } catch (e) {}
       swGlass.classList.toggle('on', on);
       App.toast(on ? 'Жидкое стекло включено' : 'Жидкое стекло выключено', on ? 'good' : '');
     };
@@ -13377,9 +13379,9 @@ const App = {
     $('#btn-reset').onclick = () => {
       if (!confirm('Начать заново? Прогресс пропадёт.')) return;
       try {
-        localStorage.removeItem('mide.save.v1');
-        localStorage.removeItem('avitoFlip.save.v2');
-        localStorage.removeItem('mide.save');
+        localStorage.removeItem('mide.testv2.save.v1');
+        localStorage.removeItem('mide.testv2.old.save');
+        localStorage.removeItem('mide.testv2.save');
       } catch (e) {}
       App.reset();
       App.go('feed');
